@@ -23,7 +23,7 @@ pipeline {
    }
    stage('Docker image') {
     steps {
-      sh 'eval ${minikube docker-env}'
+      sh 'eval minikube docker-env'
       sh './mvnw jib:dockerBuild'
     }
 
