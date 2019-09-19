@@ -12,7 +12,7 @@ pipeline {
    }
    stage('Build') {
        steps {
-     sh "./mvnw -Dimage=${currentBuild.number} clean package"
+     sh "./mvnw clean package"
        }
    }
    stage('Results') {
@@ -25,7 +25,7 @@ pipeline {
     steps {
       sh '''
       eval eval $(minikube docker-env)
-      ./mvnw jib:dockerBuild'''
+      ./mvnw -Dimage=${currentBuild.number} jib:dockerBuild'''
     }
 
    }
