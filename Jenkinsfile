@@ -21,5 +21,11 @@ pipeline {
       archiveArtifacts 'target/*.jar'
       }
    }
+   stage('Docker image') {
+    steps {
+      sh './mvnw jib:dockerBuild'
+    }
+
+   }
     }
 }
