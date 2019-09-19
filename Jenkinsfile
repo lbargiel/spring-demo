@@ -25,9 +25,18 @@ pipeline {
     steps {
       sh '''
       eval eval $(minikube docker-env)
-      ./mvnw -Dimage="${currentBuild.number}" jib:dockerBuild'''
+      ./mvnw jib:dockerBuild'''
     }
 
+   }
+
+   stage('Deploy to test') {
+    steps {
+      sh '''
+      kubectl create deployment spring-demo --image=spring-demo:0.0.1-SNAPSHOT
+      kubectl expose deployment spring-demo --type=NodePort --port=8090
+      '''
+    }
    }
     }
 }
